@@ -1,0 +1,11 @@
+# This is an example configuration file for ebird assigment
+
+redis:
+  host: <database_hostname>
+  db: 0
+  user: default
+  password: <password>
+  port: 17220
+
+ebird:
+  apikey: <API_key>
