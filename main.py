@@ -16,6 +16,10 @@ if __name__ == "__main__":
 
     report = birdreport(data, regionCode, days_back)
 
+    print(report.speciesObserved())
+
+    print(report.speciesCount())
+    
     report.plotObservations()
 
     report.plotCount()

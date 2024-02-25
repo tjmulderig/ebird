@@ -14,6 +14,7 @@ class birdreport():
         speciesObserved
         speciesCount
         plotObservations
+        plotCount
     """
 
     def __init__(self, data, regionCode, back):
@@ -32,13 +33,14 @@ class birdreport():
                                     self.df['howMany'] == self.df['howMany'].max(), 
                                     ['comName', 'howMany', 'locName', 'obsDt']
                                     ]
-
+        print("------------------------------------------------------")
+        print("Birdreport summary stats:")
         print("Number of unique species seen:", num_unique_species)
         print("Number of unique locations:", num_unique_locations)
         print("Total number of birds observed:", num_birds_total)
         print("Percentage of observations reviewed by birding experts:",
                "{:.0%}".format(pct_obs_reviewed))
-        print("Largest amount seen of any species: \n", highest_count_species)
+        print("Largest amount seen of any species at one time: \n", highest_count_species)
 
     def speciesObserved(self):
 
@@ -52,7 +54,11 @@ class birdreport():
     def speciesCount(self):
 
         """
-        Returns pandas Data Series of total counts per species indexed by
+        Sums across each common name (species) the howMany column to calculate
+        total amount of each species seen across time range.
+
+        Returns 
+            Pandas Data Series of total counts per species indexed by
         'comName' column. 
         """
         species_count = self.df.groupby(['comName'])['howMany'].sum().sort_values(ascending=False)
@@ -80,6 +86,7 @@ class birdreport():
         
         ax.set_xlabel("Longitude")
         ax.set_ylabel("Latitude")
+
         today_str = datetime.datetime.today().strftime('%Y-%m-%d')
         firstday = datetime.datetime.today() \
                     - datetime.timedelta(days=self.back)
@@ -87,7 +94,7 @@ class birdreport():
         title = "Recent Bird Observations in New Jersey, " + firstday_str \
                 + " to " + today_str
         ax.set_title(title)
-        self.back
+
         plt.show()
 
         return
